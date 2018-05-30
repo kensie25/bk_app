@@ -146,5 +146,9 @@ Template.MenuMasterCounselors.events({
             default:
                 pns()
         }
+    },
+
+    'click #btSaveCounselors': function(){
+        sweetAlert("OK", "Testing", "success")
     }
 })
