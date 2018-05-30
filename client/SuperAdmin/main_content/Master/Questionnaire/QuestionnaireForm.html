@@ -1,0 +1,119 @@
+<template name="QuestionnaireForm">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Questionnaire Form
+                <small>Input Data Questionnaire</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>
+                <li><a href="#">Questionnaire</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Form Input Questionnaire</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="comment">Questions</label>
+                                        <textarea class="form-control" placeholder="Enter Question Here..." rows="3" id="txtQuestion"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <br>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        <label>Kelompok Masalah</label>
+                                        <select id="GrpQuestions" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option value="" class="text-center"> ---------- PILIH GROUP MASALAH ----------</option>
+                                            {{#each grpMasalah}}
+                                                <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-2 pull-right">
+                                        <label>Status</label>
+                                        <select id="stsQuestions" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected" value="true">ACTIVE</option>
+                                            <option value="false">INACTIVE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-3 pull-right">
+                                        <button type="button" class="btn btn-primary pull-right" id="btaddQuestion">
+                                            <i class="fa fa-save"></i> Add Question
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                   <table class="table-responsive table-hover table-striped" width="100%">
+                                       <thead style="color: #2c3b41">
+                                           <tr>
+                                               <th class="text-center" width="5%">No</th>
+                                               <th class="text-center" width="7%" style="background-color: #b4dbed">Kode</th>
+                                               <th class="text-center" width="*">Questions</th>
+                                               <th class="text-center" width="8%">Status</th>
+                                               <th class="text-center" width="10%">Action</th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                       {{#each dataQuestions}}
+                                            <tr>
+                                                <td class="text-center">
+                                                    {{urut}}
+                                                </td>
+                                                <td class="text-center" style="background-color: #b4dbed">
+                                                    {{kode_pertanyaan}}
+                                                </td>
+                                                <td>
+                                                    {{pertanyaan}}
+                                                </td>
+                                                <td class="text-center">
+                                                    <input id="sts_pertanyaan" class="" checked="{{sts_pertanyaan}}" type="checkbox"> <br>{{stsTanya}}
+                                                </td>
+                                                <td class="text-center">
+                                                    <button id="btDelQuestion" class="btn btn-danger btn-xs">
+                                                     <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                       {{/each}}
+                                       </tbody>
+                                   </table>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{> FooterSA}}
+</template>

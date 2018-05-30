@@ -1,0 +1,626 @@
+<template name="MenuMasterStudents">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Add Students Form
+                <small>Input Data Siswa/Siswi</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>
+                <li><a href="#">Add Students</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <!--<h3 class="box-title pull-right text-danger">{{sekolahProfile.nm_sekolah}}</h3>-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <div class="info-box bg-aqua-gradient">
+                                            <span class="info-box-icon"><i class="fa fa-institution"></i></span>
+
+                                            <div class="info-box-content">
+                                                    <span class="info-box-text" style="font-size: 13px;">
+                                                        <b>{{sekolahProfile.nm_sekolah}}</b>
+                                                    </span>
+                                                <span class="info-box-number" style="font-size: 12px;">Total Pelajar 37</span>
+
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                      <span class="progress-description">
+                                                          <b>{{sekolahProfile.kota}} - {{sekolahProfile.provinsi}}</b>
+                                                      </span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <div class="info-box bg-red-gradient">
+                                            <span class="info-box-icon"><i class="fa fa-commenting"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-text" style="font-size: 12px;">GURU KONSELOR</span>
+                                                <span class="info-box-number" style="font-size: 14px;">{{currentUser.profile.fullname}}</span>
+
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                      <span class="progress-description">
+                                                          <b style="font-size: 12px;">NIP : XXXXX XXXX XXXXX XXXXX</b>
+                                                      </span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <div class="info-box bg-green-gradient">
+                                            <span class="info-box-icon"><i class="fa fa-home"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-text" style="font-size: 12px;">JURUSAN : </span>
+                                                <span class="info-box-number" style="font-size: 12px;"> KELAS :</span>
+
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                      <span class="progress-description">
+                                                          <b>SABTU. MEI 26, 2018 </b>
+                                                      </span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-header -->
+                        <br>
+                        <div class="stepwizard">
+                            <div class="stepwizard-row setup-panel">
+                                <div class="stepwizard-step">
+                                    <a href="#" id="step1" type="button" class="btn btn-info" style="border-radius: 35px; width: 70px; height: 70px;">
+                                        <i class="fa fa-male" style="font-size:55px;"></i>
+                                    </a>
+                                    <p>Step 1</p>
+                                </div>
+                                <div class="stepwizard-step">
+                                    <a href="#" id="step2" type="button" class="btn btn-default" style="border-radius: 35px; width: 70px; height: 70px;">
+                                        <i class="fa fa-user" style="font-size:50px;"></i>
+                                    </a>
+                                    <p>Step 2</p>
+                                </div>
+                                <div class="stepwizard-step">
+                                    <a href="#" id="step3" type="button" class="btn btn-default" style="border-radius: 35px; width: 70px; height: 70px;">
+                                        <i class="fa fa-home" style="font-size:50px;"></i>
+                                    </a>
+                                    <p>Step 3</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- form start -->
+
+
+
+                        <form role="form">
+                            <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12" id="form1" style="">
+                                    <div class="box box-info">
+                                        <div class="box-header">
+                                            <h3 class="pull-right">Identitas Pribadi</h3>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="col-md-3">
+                                                <label for="comment">No. Induk Siswa</label>
+                                                <input class="form-control" id="inpNik" required/>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="comment">Nama Lengkap</label>
+                                                    <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
+                                                    <input class="form-control" id="inpNmSiswa" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="comment">Agama</label>
+                                                    <select id="selAgama" class="form-control" style="width: 100%" required>
+                                                        {{#each optAgama}}
+                                                            <option value="{{nilai}}">{{teks}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Jenis Kelamin</label>
+                                                    <select id="selJenjang" class="form-control" style="width: 100%" required>
+                                                        {{#each jenKel}}
+                                                            <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Tempat Lahir</label>
+                                                    <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
+                                                    <input type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Tanggal Lahir</label>
+                                                    <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
+                                                    <input type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="comment">Tinggi Badan</label>
+                                                    <input type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="comment">Berat Badan</label>
+                                                    <input type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="comment">Gol.Darah</label>
+                                                    <input type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Nama Kelas</label>
+                                                    <select id="selSts" class="form-control" style="width: 100%" required>
+                                                        <option value="" class="text-center"> ---- PILIH KELAS ---- </option>
+                                                        {{#each optKelas}}
+                                                            <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Jurusan</label>
+                                                    <select id="selJurusan" class="form-control" style="width: 100%" required>
+                                                        <option value="" class="text-center"> ---- PILIH JURUSAN ---- </option>
+                                                        {{#each optJurusan}}
+                                                            <option value="{{nilai}}">{{teks}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Email</label>
+                                                    <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
+                                                    <input class="form-control" placeholder="Input Alamat Email..." id="inpEmail"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="comment">Handphone</label>
+                                                    <span class="text-muted" style="font-size: 11px;">( +628XXXXXXXXX )</span>
+                                                    <input class="form-control" placeholder="Input Nomor Handphone..." id="inpHandPhone"/>
+                                                </div>
+                                            </div>
+
+                                            <!-- XXXXX -->
+                                            <div class="col-md-12">
+                                                <label>Alamat Lengkap</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="inpAlamatSiswa" placeholder="Input Alamat Lengkap...">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-map-signs"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <br>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="comment">Provinsi</label>
+                                                    <select id="selProvince" class="form-control" style="width: 100%">
+                                                        <option value="" class="text-center"> Pilih Provinsi </option>
+                                                        {{#each optProvinsi}}
+                                                            <option value="{{province}}">{{province}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="comment">Kabupaten / Kota</label>
+                                                    <select id="selKota" class="form-control" style="width: 100%">
+                                                        <option value="" class="text-center"> Pilih Kota/Kabupaten </option>
+                                                        {{#each optKota}}
+                                                            <option value="{{city_name}}">{{city_name}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="comment">Kecamatan</label>
+                                                    <select id="selKecamatan" class="form-control" style="width: 100%">
+                                                        <option value="" class="text-center"> Pilih Kecamatan </option>
+                                                        {{#each optKecamatan}}
+                                                            <option value="{{subdistrict_name}}">{{subdistrict_name}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <br>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="comment">Kelurahan</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" id="inpKelurahan" placeholder="Input Kelurahan">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-map"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="comment">R T</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" id="inpRt" placeholder="Input RT">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-map-pin"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="comment">R W</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" id="inpRw" placeholder="Input RW">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-map-pin"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="comment">Kodepos</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" id="inpKodepos" placeholder="Input Kodepos">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-map-marker"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Form Step2-->
+                                <div class="col-md-12" id="form2" style="display: none">
+                                    <div class="box box-warning">
+                                        <div class="box-header">
+                                            <h3 class="pull-right">Identitas Orang Tua / Wali</h3>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="col-md-4">
+                                                <div class="box-warning">
+
+                                                    <div class="box-body">
+                                                        <strong class="text-red">DATA AYAH :</strong>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Nama Lengkap</label>
+                                                            <input type="text" class="form-control" placeholder="Input nama lengkap ayah..." id="inpNmAyah"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Agama</label>
+                                                            <select id="selAgamaAyah" class="form-control" style="width: 100%" required>
+                                                                {{#each optAgama}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Umur</label>
+                                                            <input type="number" class="form-control" placeholder="Input umur ayah..." id="inpUmurAyah"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Pendidikan Terakhir</label>
+                                                            <select id="selPendAyah" class="form-control" style="width: 100%">
+                                                                {{#each optPendidikan}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Pekarjaan</label>
+                                                            <select id="selPekerjaanAyah" class="form-control" style="width: 100%">
+                                                                {{#each optPekerjaan}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Spesifik Pekerjaan</label>
+                                                            <input type="text" class="form-control" placeholder="Input spesifik pekerjaan ayah..." id="inpSpekJobAyah"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Alamat Pekerjaan / Kantor</label>
+                                                            <input type="text" class="form-control" placeholder="Input alamat kantor ayah..." id="inpAlamatJobAyah"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Telephone / Handphone</label>
+                                                            <input type="number" class="form-control" placeholder="Input handphone ayah..." id="inpPhoneAyah"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Jum.Penghasilan Per-Bulan (Rata2)</label>
+                                                            <input type="number" class="form-control" placeholder="Input penghasilan rata rata..." id="inpSalaryAyah"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="box-warning">
+                                                    <div class="box-body">
+                                                        <strong class="text-red">DATA IBU :</strong>
+                                                        <div class="form-group">
+                                                            <label for="NmIbu">Nama Lengkap</label>
+                                                            <input type="text" class="form-control" placeholder="Input nama lengkap ibu..." id="inpNmIbu"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Agama</label>
+                                                            <select id="selAgamaIbu" class="form-control" style="width: 100%" required>
+                                                                {{#each optAgama}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Umur</label>
+                                                            <input type="number" class="form-control" placeholder="Input umur ibu..." id="inpUmurIbu"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Pendidikan Terakhir</label>
+                                                            <select id="selPendIbu" class="form-control" style="width: 100%">
+                                                                {{#each optPendidikan}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Pekarjaan</label>
+                                                            <select id="selPekerjaanIbu" class="form-control" style="width: 100%">
+                                                                {{#each optPekerjaan}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Spesifik Pekerjaan</label>
+                                                            <input type="text" class="form-control" placeholder="Input spesifik pekerjaan ibu..." id="inpSpekJobIbu"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Alamat Pekerjaan / Kantor</label>
+                                                            <input type="text" class="form-control" placeholder="Input alamat kantor ibu..." id="inpAlamatJobIbu"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Telephone / Handphone</label>
+                                                            <input type="number" class="form-control" placeholder="Input handphone ibu..." id="inpPhoneIbu"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Jum.Penghasilan Per-Bulan (Rata2)</label>
+                                                            <input type="number" class="form-control" placeholder="Input rata rata penghasilan..." id="inpSalaryIbu"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="box-warning">
+                                                    <div class="box-body">
+                                                        <strong class="text-red">DATA WALI :</strong>
+                                                        <div class="form-group">
+                                                            <label for="NmWali">Nama Lengkap</label>
+                                                            <input class="form-control" placeholder="Input nama lengkap wali..." id="inpNmWali"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Agama</label>
+                                                            <select id="selAgamaWali" class="form-control" style="width: 100%" required>
+                                                                {{#each optAgama}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Umur</label>
+                                                            <input class="form-control" placeholder="Input umur wali..." id="inpUmurWali"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Pendidikan Terakhir</label>
+                                                            <select id="selPendWali" class="form-control" style="width: 100%">
+                                                                {{#each optPendidikan}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Pekarjaan</label>
+                                                            <select id="selPekerjaanWali" class="form-control" style="width: 100%">
+                                                                {{#each optPekerjaan}}
+                                                                    <option value="{{nilai}}">{{teks}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Spesifik Pekerjaan</label>
+                                                            <input class="form-control" placeholder="Input spesifik pekerjaan wali..." id="inpSpekJobWali"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Alamat Pekerjaan / Kantor</label>
+                                                            <input class="form-control" placeholder="Input alamat kantor wali..." id="inpAlamatJobWali"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Telephone / Handphone</label>
+                                                            <input class="form-control" placeholder="Input handphone wali..." id="inpPhoneWali"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="NmAyah">Jum.Penghasilan Per-Bulan (Rata2)</label>
+                                                            <input class="form-control" placeholder="Input rata rata penghasilan..." id="inpSalaryWali"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="form3" style="display: none">
+                                    <div class="box box-danger">
+                                        <div class="box-header">
+                                            <h3 class="pull-right">Sosial Ekonomi</h3>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="NmWali">Siswa Tinggal Bersama</label>
+                                                    <select id="selTinggalBersama" class="form-control" style="width: 100%">
+                                                        {{#each optTinggalBersama}}
+                                                            <option value="{{nilai}}">{{teks}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            {{#if t4tinggal}}
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="NmWali">Siswa Tinggal Bersama</label>
+                                                    <input type="text" class="form-control" placeholder="Input lainnya..." id="inpTinggalBersama"/>
+                                                </div>
+                                            </div>
+                                            {{else}}
+                                            <div class="col-md-3" style="display: none">
+                                                <div class="form-group">
+                                                    <label for="NmWali">Siswa Tinggal Bersama</label>
+                                                    <input type="text" class="form-control" id="inpTinggalBersama" disabled/>
+                                                </div>
+                                            </div>
+                                            {{/if}}
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="NmWali">Jumlah Bersaudara</label>
+                                                    <input type="number" class="form-control" placeholder="Input Jumlah Saudara..." id="inpJumSaudara"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="NmWali">Saudara Laki-Laki</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-male"></i></span>
+                                                    <input type="number" class="form-control" value="0" min="0" id="inpJumMale">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="NmWali">Saudara Perempuan</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-female"></i></span>
+                                                    <input type="number" class="form-control" value="0" min="0" id="inpJumFemale">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                &nbsp;
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="NmWali">Jumlah Saudara Yg Telah Berkeluarga</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-male"></i><i class="fa fa-female"></i></span>
+                                                    <input type="number" class="form-control" value="0" min="0" id="inpJumMerried">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="NmWali">Jenis Transportasi ke Sekolah</label>
+                                                <select id="selTranport" class="form-control" style="width: 100%">
+                                                    {{#each optJnsTransport}}
+                                                        <option value="{{nilai}}">{{teks}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="NmWali">Jarak ke Sekolah</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-road">KM</i></span>
+                                                    <input type="number" class="form-control" value="0" min="0" id="inpJarak">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="NmWali">Status Ekonomi Keluarga</label>
+                                                <select id="selStsEkonomi" class="form-control" style="width: 100%">
+                                                    {{#each optStsEkonomi}}
+                                                        <option value="{{nilai}}">{{teks}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                {{! SekolahTable}}
+                                <div class="col-md-2 pull-right">
+                                    <button type="button" class="btn btn-primary pull-right" id="btNext1">
+                                    Next <i class="fa fa-angle-double-right"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-warning pull-right" id="btNext2">
+                                        Next <i class="fa fa-angle-double-right"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default pull-left" id="btBack2">
+                                        <i class="fa fa-angle-double-left"></i>  Back
+                                    </button>
+                                    <button type="button" class="btn btn-danger pull-right" id="btNext3">
+                                        Next <i class="fa fa-angle-double-right"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default pull-left" id="btBack3">
+                                        <i class="fa fa-angle-double-left"></i>  Back
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{> FooterSA}}
+</template>

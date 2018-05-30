@@ -1,0 +1,41 @@
+<template name="SidebarSA">
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p id="test">{{currentUser.profile.fullname}}</p>
+                    <div id="badCon" style="display: none">
+                        <a href="#"><i class="fa fa-circle text-danger"></i> Bad Connections...</a>
+                    </div>
+                    <div id="goodCon" style="display: none">
+                        <a href="#"><i class="fa fa-circle text-success"></i> Good Connections...</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                {{#each list in listMenu}}
+                    <li class="treeview" id="main_menu">
+                        <a href="#">
+                            <i class="{{list.ico_mainmenu}}"></i> <span>{{list.nama_mainmenu}}</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            {{#each sublist in list.sub_mainmenu}}
+                                <li><a href="{{sublist.url_submenu}}"><i class="{{sublist.ico_submenu}}"></i> {{sublist.nama_submenu}}</a></li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                {{/each}}
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+</template>

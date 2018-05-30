@@ -1,0 +1,99 @@
+<template name="SekolahTable">
+    <div class="col-md-12 table-responsive">
+        <table class="table-hover table-striped" width="100%">
+            <thead style="color: #2c3b41">
+            <tr>
+                <th class="text-center" style="font-size: 11px;" width="2%">
+                    No
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="*">
+                    Kode/Nama <br>
+                    Alamat Sekolah
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="8%">
+                    Jenjang - TIPE <br>
+                    Akreditasi
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="12%">
+                    Provinsi<br>
+                    Kabupaten/Kota
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="12%">
+                    Kecamatan<br>
+                    Kelurahan
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="5%">
+                    RT / RW<br>
+                    KodePos
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="15%">
+                    Email - Phone<br>
+                    PASSKEY
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="12%">
+                    NM KEPSEK<br>
+                    NIP
+                </th>
+                <th class="text-center" style="font-size: 11px;" width="10%">
+                    #<br>
+                    Action<br>
+                    #
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each tabSekolah}}
+                <tr id="loading">
+                    <td class="text-center">
+                        {{urut @index}}
+                    </td>
+                    <td class="pull-left" style="background-color: #b4dbed; font-size: 11px;">
+                        <b class="text-bold text-danger">( {{kd_sekolah}} )</b><br>
+                        <b>{{nm_sekolah}}</b><br>
+                        {{alamat_sekolah}}
+                    </td>
+                    <td class="text-center" style="font-size: 11px;">
+                        {{jenjang_sekolah}} - {{tipe_sekolah}}<br>
+                        <span class="text-bold">Akreditasi [{{akreditasi}}]</span>
+                    </td>
+                    <td class="text-left" style="font-size: 11px;">
+                        {{provinsi}} <br> {{kota}}
+                    </td>
+                    <td class="text-left" style="font-size: 11px;">
+                        {{kecamatan}} <br> {{kelurahan}}
+                    </td>
+                    <td class="text-center" style="font-size: 11px;">
+                        {{rt}} / {{rw}}<br>
+                        {{kodepos}}
+                    </td>
+                    <td class="text-left" style="font-size: 11px;">
+                        <i class="fa fa-envelope"></i> {{email}}<br>
+                        <i class="fa fa-tty"></i> {{phone}}<br>
+                        <i class="fa fa-unlock"></i> PassKey : <label class="label-danger">{{pass}}</label>
+                    </td>
+                    <td class="text-center" style="font-size: 11px;">
+                        {{nm_kepsek}}<br>
+                        {{nip_kepsek}}<br>
+                        {{sts_sekolah}}
+                    </td>
+                    <td class="text-center">
+                        <button id="btActivateUser" class="btn btn-danger btn-xs" style="padding-left: 6px;padding-right: 6px;">
+                            <i class="fa fa-ban"></i>
+                        </button>
+                        <br>
+                        {{#if StsSekolah}}
+                            <button id="btDelQuestion" class="btn btn-info btn-xs">
+                                <i class="fa fa-check"></i>
+                            </button>
+                            {{else}}
+                            <button id="btDelQuestion" class="btn btn-warning btn-xs">
+                                <i class="fa fa-close"></i>
+                            </button>
+                        {{/if}}
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>

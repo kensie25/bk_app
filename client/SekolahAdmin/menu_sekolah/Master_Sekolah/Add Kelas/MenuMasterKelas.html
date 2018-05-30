@@ -1,0 +1,165 @@
+<template name="MenuMasterKelas">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Add Kelas
+                <small>Input Data Kelas</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>
+                <li><a href="#">Add Kelas</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4 class="box-title pull-left text-bold">( {{sekolahProfile.kd_sekolah}} )</h4>
+                            <h4 class="box-title pull-right text-danger">{{sekolahProfile.nm_sekolah}}</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form id="fNewKelas">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="comment">Kode Kelas</label>
+                                                <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
+                                                <input type="text" class="form-control" id="inpKdKelas" required/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="comment">Nama Kelas</label>
+                                                <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
+                                                <input type="text" class="form-control" id="inpNmKelas" required/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="comment">Nama Wali Kelas</label>
+                                                <input type="text" class="form-control" id="inpNmWaliKelas" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="comment">Jurusan</label>
+                                                <select id="selJurusan" class="form-control" style="width: 100%" required>
+                                                    <option value="NONE">Pilih Jurusan</option>
+                                                    {{#each optJurusan}}
+                                                        <option value="{{kd_jurusan}}">{{nm_jurusan}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 pull-right">
+                                            <div class="form-group">
+                                                <label for="comment">NIP Wali Kelas</label>
+                                                <input type="text" class="form-control" id="inpNipWaliKelas" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 pull-right">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary pull-right" id="btSaveKelas">
+                                                    <i class="fa fa-save"></i> Add Kelas
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overlay" id="spinner">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4 class="box-title pull-left text-bold">Data List Kelas {{sekolahProfile.nm_sekolah}}</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    No.
+                                                </th>
+                                                <th>
+                                                    Kode Sekolah<br>
+                                                    Nama Sekolah
+                                                </th>
+                                                <th>
+                                                    Kode Kelas<br>
+                                                    Nama Kelas
+                                                </th>
+                                                <th>
+                                                    Nama Wali Kelas<br>
+                                                    NIP Wali Kelas
+                                                </th>
+                                                <th>
+                                                    Nama Jurusan<br>
+                                                    Created By
+                                                </th>
+                                                <th>
+                                                    Act
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {{#each listKelas}}
+                                            <tr>
+                                                <td>{{incremented @index}}</td>
+                                                <td>
+                                                    {{kd_sekolah}}<br>
+                                                    {{nm_sekolah}}
+                                                </td>
+                                                <td>
+                                                    {{kd_kelas}}<br>
+                                                    {{nm_kelas}}
+                                                </td>
+                                                <td>
+                                                    {{nm_walikelas}}<br>
+                                                    {{nip_walikelas}}
+                                                </td>
+                                                <td>
+                                                    {{kelas_jurusan}}<br>
+                                                    {{created_by}}
+                                                </td>
+                                                <td><i class="fa fa-trash-o" id="btDelKelas"></i></td>
+
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overlay" id="spinnertbl">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    {{> FooterSA}}
+</template>

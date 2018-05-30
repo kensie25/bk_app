@@ -1,0 +1,15 @@
+<template name="mainApp">
+    {{#if currentUser}}
+        {{#if currentUser.emails.[0].verified}}
+                {{#AdminLTE skin="blue" sidebarMini=true fixed=true}}
+                    {{> yield "header"}}
+                    {{> yield "sidebar"}}
+                    {{> yield "content"}}
+                {{/AdminLTE}}
+        {{else}}
+            {{> ResendEmailAktivation}}
+        {{/if}}
+    {{else}}
+        {{> yield "custom"}}
+    {{/if}}
+</template>

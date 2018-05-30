@@ -1,0 +1,129 @@
+<template name="OptionSetting">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Setting OPTIONS
+                <small>Setup Data Options</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Setting</a></li>
+                <li><a href="#">Options</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Form Input Questionnaire</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="col-md-4">
+                                    <label for="comment">Title</label>
+                                    <input class="form-control" placeholder="Enter Question Here..." id="titleOpt" required/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="comment">Nilai</label>
+                                    <input class="form-control" placeholder="Enter Question Here..." id="nilaiOpt" required/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="comment">Teks</label>
+                                    <input class="form-control" placeholder="Enter Question Here..." id="teksOpt" required/>
+                                </div>
+                                    <div class="col-md-4 conText">
+                                        <label>Status</label>
+                                        <select id="stsOpt" class="form-control">
+                                            <option value=""> --- Pilih Status ---</option>
+                                            {{#each selOptions}}
+                                            <option value="{{nilai}}">{{teks}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                <div class="form-group conText">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-3 pull-right">
+                                        <button type="button" class="btn btn-primary pull-right" id="btaddOptions">
+                                            <i class="fa fa-save"></i> Add Options
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-danger">
+                        <div class="box-header">
+                            <h3 class="box-title">Form Input Questionnaire</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-hover table-responsive">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th class="">
+                                        <!--<i class="fa fa-th-list pull-left"></i>-->
+                                        Title
+                                    </th>
+                                    <th class="">Nilai</th>
+                                    <th class="">Teks</th>
+                                    <th class="text-center">Urut</th>
+                                    <th class="text-center">
+                                        <i class="fa fa-clock-o"></i>
+                                        Created At
+                                    </th>
+                                    <th class="text-center">Act</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each dataOptions}}
+                                <tr>
+                                    <td class="text-center">
+                                        {{incremented @index}}
+                                    </td>
+                                    <td>
+                                        {{title}}
+                                    </td>
+                                    <td class="">
+                                        {{nilai}}
+                                    </td>
+                                    <td>
+                                        {{teks}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{urut}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{created_time}}
+                                    </td>
+                                    <td class="text-center">
+                                        <i class="text-danger fa fa-trash-o" id="btDelOpt"></i>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{> FooterSA}}
+</template>

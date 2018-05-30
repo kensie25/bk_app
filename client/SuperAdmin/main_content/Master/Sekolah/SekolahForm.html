@@ -1,0 +1,276 @@
+<template name="SekolahForm">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Sekolah Form
+                <small>Input Data Sekolah</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>
+                <li><a href="#">Sekolah</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Form Input Data Sekolah</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="comment">Kode Sekolah</label>
+                                        <input class="form-control" placeholder="Input Kode Sekolah..." id="inpKdSekolah"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="comment">Nama Sekolah</label>
+                                        <input class="form-control" placeholder="Input Nama Sekolah..." id="inpNmSekolah"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="comment">Jenjang Pendidikan</label>
+                                        <select id="selJenjang" class="form-control" style="width: 100%">
+                                            <option value="" class="text-center"> ---- PILIH JENJANG ---- </option>
+                                            {{#each optJenjang}}
+                                                <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="comment">Status Sekolah</label>
+                                        <select id="selSts" class="form-control" name="Status Sekolah" style="width: 100%">
+                                            <option value="" class="text-center"> ---- PILIH STATUS ---- </option>
+                                            {{#each optStatusSek}}
+                                                <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="comment">Akreditasi Sekolah</label>
+                                        <select id="selAkreditasi" class="form-control" style="width: 100%">
+                                            <option value="" class="text-center"> ---- PILIH AKREDITASI ---- </option>
+                                            {{#each sekAkreditasi}}
+                                                <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="comment">Alamat Lengkap</label>
+                                        <input class="form-control" placeholder="Input Alamat Lengkap Sekolah..." id="inpAlamat"/>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-3">-->
+                                    <!--&nbsp;-->
+                                <!--</div>-->
+                                <div class="col-md-7">
+                                    <div class="well" style="padding-bottom: 10px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-navy-active"><i class="fa fa-map"></i></span>
+                                                    <div class="info-box-content">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="comment">Provinsi</label>
+                                                                <select id="selProvince" class="form-control" style="width: 100%">
+                                                                    <option value="" class="text-center">  </option>
+                                                                    {{#each optProvinsi}}
+                                                                        <option value="{{province}}">{{province}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="comment">Kabupaten/Kota</label>
+                                                                <select id="selKota" class="form-control" style="width: 100%">
+                                                                    <option value="" class="text-center">  </option>
+                                                                    {{#each optKota}}
+                                                                        <option value="{{city_name}}">{{city_name}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                                <!-- /.info-box -->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-navy-active"><i class="fa fa-binoculars"></i></span>
+
+                                                    <div class="info-box-content">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="comment">Kecamatan</label>
+                                                                <select id="selKecamatan" class="form-control" style="width: 100%">
+                                                                    <option value="" class="text-center"> </option>
+                                                                    {{#each optKecamatan}}
+                                                                        <option value="{{subdistrict_name}}">{{subdistrict_name}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="comment">Kelurahan</label>
+                                                                <div class="input-group">
+                                                                    <input class="form-control" type="text" id="inpKelurahan" placeholder="Input Kelurahan">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-map"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                                <!-- /.info-box -->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-navy-active"><i class="fa fa-map-marker"></i></span>
+
+                                                    <div class="info-box-content">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="comment">RT</label>
+                                                                <input class="form-control" placeholder="Input RT..." id="inpRt"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="comment">RW</label>
+                                                                <input class="form-control" placeholder="Input RW..." id="inpRw"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="comment">KODEPOS</label>
+                                                                <input class="form-control" placeholder="Input Kodepos..." id="inpKodepos"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                                <!-- /.info-box -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="well" style="padding-bottom: 5px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="panel">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="comment">Email</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" type="email" id="inpEmail" placeholder="Input Email...">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-internet-explorer"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="comment">Phone</label>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-btn">
+                                                                            <button id="tes" type="button" class="btn btn-info">+62</button>
+                                                                        </div>
+                                                                        <input class="form-control" type="number" id="inpPhone" placeholder="Input Phone...">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-mobile-phone"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="comment">Nama Kepala Sekolah</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" type="text" id="inpNmKepsek" placeholder="Input Nama Kepala Sekolah...">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-user-secret"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="comment">NIP Kepala Sekolah</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" type="text" id="inpNipKepsek" placeholder="Input NIP Kepala Sekolah...">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-barcode"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-3 pull-right">
+                                        <button type="button" class="btn btn-danger pull-right" id="btaddSekolah">
+                                            <i class="fa fa-save"></i> Add Sekolah
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                {{> SekolahTable}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{> FooterSA}}
+</template>

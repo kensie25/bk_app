@@ -1,0 +1,157 @@
+<template name="MenuSetting">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Setting MENU
+                <small>Setup Data Menu</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Setting</a></li>
+                <li><a href="#">Main Menu</a></li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Form Input Main Menu</h3>
+                        </div>
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="col-md-4">
+                                    <label for="comment">TIPE USER</label>
+                                    <select id="selTipeUser" class="form-control">
+                                        <option value="">Pilih TIPE USER</option>
+                                        {{#each selTipeUser}}
+                                            <option value="{{tipeuser_id}}">{{tipeuser_id}} - {{nama_tipe}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <input type="hidden" class="form-control" id="inpTipeUserName" required/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="comment">TITLE MENU</label>
+                                    <select id="selMainMenu" class="form-control">
+                                        <option value="">Pilih Main Menu</option>
+                                        {{#each selMainMenu}}
+                                            <option value="{{mainmenu_id}}#{{nama_mainmenu}}">Menu {{nama_mainmenu}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <input type="hidden" class="form-control" id="inpMinMenuName" required/>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="comment">SUB MENU TITLE</label>
+                                    <input class="form-control" placeholder="Input Sub Menu Title..." id="inpSubMenu" required/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="comment">SUB MENU ICON</label>
+                                    <!--<input class="form-control" placeholder="Input Text Menu Icon..." id="inpSubMenuIco" required/>-->
+                                    {{> SelectOptionsIcon}}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="comment">URL ROUTING</label>
+                                    <input class="form-control" placeholder="Input URL Menu..." id="inpSubMenuURL" required/>
+                                </div>
+                                <div class="col-md-4" style="margin-top: 10px;">
+                                    <label>Status</label>
+                                    <select id="stsOpt" class="form-control">
+                                        <option value=""> --- Pilih Status ---</option>
+                                        {{#each selOptions}}
+                                            <option value="{{nilai}}">{{teks}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group conText">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-3 pull-right">
+                                        <button type="button" class="btn btn-primary pull-right" id="btAddSubMenu">
+                                            <i class="fa fa-save"></i> &nbsp;Add Main Menu
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="box box-danger">
+                        <div class="box-header">
+                            <h3 class="box-title">Form Input Questionnaire</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-hover table-responsive" width="100%">
+                                <thead>
+                                <tr>
+                                    <th class="text-center" width="5%">No.</th>
+                                    <th class="" width="10%">
+                                        TIPE USER
+                                    </th>
+                                    <th class="" width="8%">USER ID</th>
+                                    <th class="" width="10%">NAMA MENU</th>
+                                    <th class="text-center" width="8%">MENU ID</th>
+                                    <th class="text-center" width="13%">
+                                        ICONS
+                                    </th>
+                                    <th class="text-center" width="*">DETAIL SUBMENU</th>
+                                    <th class="text-center" width="5%">Act</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each list in dataMainMenu}}
+                                    <tr>
+                                        <td class="text-center">
+                                            {{incremented @index}}
+                                        </td>
+                                        <td>
+                                            {{list.tipe_user}}
+                                        </td>
+                                        <td class="text-center">
+                                            {{list.tipeuser_id}}
+                                        </td>
+                                        <td>
+                                            {{list.nama_mainmenu}}
+                                        </td>
+                                        <td class="text-center">
+                                            {{list.mainmenu_id}}
+                                        </td>
+                                        <td class="text-left">
+                                            <span><i class="{{list.ico_mainmenu}}"></i></span>
+                                            {{list.ico_mainmenu}}
+                                        </td>
+                                        <td class="text-left">
+                                            <!--<i class="text-danger fa fa-trash-o" id="btDelOpt"></i>-->
+                                            {{#each list.sub_mainmenu}}
+                                                <tr>
+                                                    <td width="30px">{{incremented @index}}</td>
+                                                    <td width="200px">Sub Menu - <b>{{nama_submenu}}</b></td>
+                                                    <td>Icon - <b>{{ico_submenu}}</b></td>
+                                                </tr>
+                                            {{/each}}
+                                        </td>
+                                        <td>
+                                            <i class="text-danger fa fa-trash-o" id="btDelOpt"></i>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{> FooterSA}}
+</template>

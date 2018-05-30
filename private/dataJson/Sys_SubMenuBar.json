@@ -1,0 +1,31 @@
+[
+  {
+    "mainmenu_id": "1",
+    "submenu_id": "1",
+    "nama_submenu": "Questionnaire",
+    "url_submenu": "pathFor route='QuestionnaireForm'",
+    "ico_submenu": "fa fa-files"
+  },
+  {
+    "mainmenu_id": "1",
+    "submenu_id": "2",
+    "nama_submenu": "Sekolah",
+    "url_submenu": "pathFor route='SekolahForm'",
+    "ico_submenu": "fa fa-building"
+  },
+  {
+      "mainmenu_id": "2",
+      "submenu_id": "1",
+      "nama_submenu": "Setting",
+      "url_submenu": "pathFor route='OptionSetting'",
+      "ico_submenu": "fa fa-cogs"
+  },
+  {
+    "mainmenu_id": "3",
+    "submenu_id": "1",
+    "nama_submenu": "Management User",
+    "url_submenu": "#",
+    "ico_submenu": "fa fa-users"
+  }
+
+]
