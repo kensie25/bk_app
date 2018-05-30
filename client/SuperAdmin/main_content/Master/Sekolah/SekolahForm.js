@@ -121,12 +121,12 @@ Template.SekolahForm.events({
 
                 }
                 // Insert Data Profile Sekolah
-                var countSek = SekolahProfile.find({'kd_sekolah': $('#inpKdSekolah').val()}).count();
+                var countSek = BK_SekolahProfile.find({'kd_sekolah': $('#inpKdSekolah').val()}).count();
                 if(countSek != 0){
                     alert('Data sekolah Sdh Ada...');
 
                 }else{
-                    SekolahProfile.insert(dataSekolah, function(err, res){
+                    BK_SekolahProfile.insert(dataSekolah, function(err, res){
                         if(!err){
                             //sweetAlert("SUCCESS", "Data Sekolah Berhasil di Simpan...", "success");
                             alert("Data Sekolah Berhasil di Simpan...!")

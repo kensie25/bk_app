@@ -41,28 +41,28 @@
                                             <div class="form-group">
                                                 <label for="comment">NIP</label>
                                                 <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
-                                                <input type="text" class="form-control" id="inpNipCounselors"/>
+                                                <input type="text" class="form-control" id="inpNip"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="comment">NUPTK</label>
                                                 <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
-                                                <input type="text" class="form-control" id="inpNuptkCounselors"/>
+                                                <input type="text" class="form-control" id="inpNuptk"/>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="comment">ID.Generate</label>
                                                 <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
-                                                <input type="text" class="form-control" id="inpRandCounselors"/>
+                                                <input type="text" class="form-control" id="inpRandCounselors" readonly/>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="comment">Nama Lengkap</label>
                                                 <span class="text-red pull-right" style="font-size: 10px;">( field mandatory )</span>
-                                                <input class="form-control" id="inpNmSiswa" required/>
+                                                <input class="form-control" id="inpNmLengkap" required/>
                                             </div>
                                         </div>
 
@@ -80,7 +80,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="comment">Jenis Kelamin</label>
-                                                <select id="selJenjang" class="form-control" style="width: 100%" required>
+                                                <select id="selJenkel" class="form-control" style="width: 100%" required>
                                                     {{#each jenKel}}
                                                         <option value="{{nilai}}">{{nilai}} - {{teks}}</option>
                                                     {{/each}}
@@ -90,13 +90,13 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="comment">Tempat Lahir</label>
-                                                <input type="text" class="form-control"/>
+                                                <input type="text" class="form-control" id="inpT4lahir"/>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="comment">Tanggal Lahir</label>
                                             <div class="input-group">
-                                                <input class="form-control" type="text" id="inpTglLahir" placeholder="Input Kelurahan">
+                                                <input class="form-control" type="text" id="inpTglLahir">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
@@ -122,7 +122,7 @@
                                         <div class="col-md-12">
                                             <label>Alamat Lengkap</label>
                                             <div class="input-group">
-                                                <input class="form-control" type="text" id="inpAlamatSiswa" placeholder="Input Alamat Lengkap...">
+                                                <input class="form-control" type="text" id="inpAlamat" placeholder="Input Alamat Lengkap...">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-map-signs"></i>
                                                 </div>
@@ -236,7 +236,7 @@
                     <!-- general form elements -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h4 class="box-title pull-left text-bold">Data List Jurusan {{sekolahProfile.nm_sekolah}}</h4>
+                            <h4 class="box-title pull-left text-bold">Data List Counselors {{sekolahProfile.nm_sekolah}}</h4>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -249,19 +249,28 @@
                                                     No.
                                                 </th>
                                                 <th>
-                                                    Kode Sekolah
-                                                </th>
-                                                <th>
+                                                    Kode Sekolah<br>
                                                     Nama Sekolah
                                                 </th>
                                                 <th>
-                                                    Kode Jurusan
+                                                    KD.Counselors<br>
+                                                    NM.Counselors
                                                 </th>
                                                 <th>
-                                                    Nama Jurusan
+                                                    Agama<br>
+                                                    Jenkel
                                                 </th>
                                                 <th>
-                                                    Keterangan
+                                                    Email<br>
+                                                    Handphone
+                                                </th>
+                                                <th>
+                                                    Tempat Lahir<br>
+                                                    Tanggal Lahir
+                                                </th>
+                                                <th>
+                                                    Email<br>
+                                                    No.Handphone
                                                 </th>
                                                 <th>
                                                     Act
@@ -269,25 +278,34 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {{#each listJurusan}}
+                                            {{#each listCounselors}}
                                                 <tr>
                                                     <td>
                                                         {{incremented @index}}
                                                     </td>
                                                     <td>
-                                                        {{kd_sekolah}}
-                                                    </td>
-                                                    <td>
+                                                        {{kd_sekolah}}<br>
                                                         {{nm_sekolah}}
                                                     </td>
                                                     <td>
-                                                        {{kd_jurusan}}
+                                                        {{kd_counselors}} <b> ( {{sts_jabatan}} )</b><br>
+                                                        {{nm_lengkap}}
                                                     </td>
                                                     <td>
-                                                        {{nm_jurusan}}
+                                                        {{agama}}<br>
+                                                        {{jenkel}}
                                                     </td>
                                                     <td>
-                                                        {{ket_jurusan}}
+                                                        {{email}}<br>
+                                                        {{phone}}
+                                                    </td>
+                                                    <td>
+                                                        {{created_at}}<br>
+                                                        {{created_by}}
+                                                    </td>
+                                                    <td>
+                                                        {{urut}}<br>
+                                                        {{sts_counselors}}
                                                     </td>
                                                     <td>
                                                         <i class="fa fa-trash-o" id="btDelJurusan"></i>

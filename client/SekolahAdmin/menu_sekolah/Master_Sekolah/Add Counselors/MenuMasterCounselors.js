@@ -8,38 +8,35 @@ import './MenuMasterCounselors.html';
 
 function makeid() {
     var text = "";
+    var tglReg = moment(new  Date()).format('YYYYMMDD')
     var possible = "0123456789";
-    for (var i = 0; i < 18; i++)
+    for (var i = 0; i < 6; i++) //081280
         text += possible.charAt(Math.floor(Math.random() * possible.length));
-    return text;
+    return 'HNR'+tglReg+text;
 }
 
 function standart(){
-    $('#inpNuptkCounselors').attr('disabled', 'true')
+    $('#inpNuptk').attr('disabled', 'true')
     $('#inpRandCounselors').attr('disabled', 'true')
     $('#inpRandCounselors').val(makeid())
 
 }
 function pns(){
-    $('#inpNipCounselors').removeAttr('disabled')
-    $('#inpNuptkCounselors').attr('disabled', 'true')
+    $('#inpNip').removeAttr('disabled')
+    $('#inpNuptk').attr('disabled', 'true')
     $('#inpRandCounselors').val(makeid())
-    $('#inpRandCounselors').attr('disabled', 'true')
 }
 
 function honorer(){
-    $('#inpNuptkCounselors').removeAttr('disabled')
-    $('#inpNipCounselors').attr('disabled', 'true')
-    $('#inpRandCounselors').attr('disabled', 'true')
+    $('#inpNuptk').removeAttr('disabled')
+    $('#inpNip').attr('disabled', 'true')
     $('#inpRandCounselors').val(makeid())
 }
 
 function lainnya(){
-    $('#inpNipCounselors').attr('disabled', 'true')
-    $('#inpNuptkCounselors').attr('disabled', 'true')
-    $('#inpRandCounselors').removeAttr('disabled')
+    $('#inpNip').attr('disabled', 'true')
+    $('#inpNuptk').attr('disabled', 'true')
     $('#inpRandCounselors').val(makeid())
-    $('#inpRandCounselors').removeAttr('readonly', 'true')
 }
 
 Template.MenuMasterCounselors.onCreated(function(){
@@ -76,6 +73,7 @@ Template.MenuMasterCounselors.onRendered(function(){
 
         }
     }
+
 })
 
 Template.MenuMasterCounselors.helpers({
@@ -85,6 +83,21 @@ Template.MenuMasterCounselors.helpers({
         Template.instance().sekolah_id.set(data)
         return data
     },
+
+    incremented: function(index){
+        index++;
+        return index;
+    },
+
+    //isDataLoad: function(subdistrict_name){
+    //    var loaddata = subdistrict_name
+    //    console.log(loaddata)
+    //    if(loaddata === '' || loaddata == undefined){
+    //        return true
+    //    }else{
+    //        return false
+    //    }
+    //},
 
     optPns: function(){
         return SysOptions.find({title: "STATUS COUNSELORS"}).fetch()
@@ -119,6 +132,16 @@ Template.MenuMasterCounselors.helpers({
         console.log("SysKecamatan.find({'province_id': "+xidprov+", 'city_id': "+idkab.city_id+"}).fetch()")
 
         return SysKecamatan.find({'province_id': xidprov, 'city_id': idkab.city_id}).fetch();
+    },
+
+    listCounselors: function(){
+        var dataTsekolah = Template.instance().sekolah_id.get()
+        var data = BK_SekolahCounselors.find({kd_sekolah:dataTsekolah.kd_sekolah, sts_counselors: true}).fetch()
+        var x = data.map(function(doc){
+            doc.created_at = moment().format('LLL');
+            return x
+        })
+        return data
     }
 })
 
@@ -148,7 +171,69 @@ Template.MenuMasterCounselors.events({
         }
     },
 
-    'click #btSaveCounselors': function(){
-        sweetAlert("OK", "Testing", "success")
+    'click #btSaveCounselors': function(e){
+        e.preventDefault()
+        var dataTsekolah = Template.instance().sekolah_id.get()
+        var urutan = BK_SekolahCounselors.find({kd_sekolah: dataTsekolah.kd_sekolah}).count()
+
+        var pns = $('#selPns').val()
+        switch (pns){
+            case 'LAINNYA':
+                var kdcounselors = $('#inpRandCounselors').val()
+                break;
+            case 'HONORER':
+                var kdcounselors = $('#inpNuptk').val()
+                break;
+            default:
+                var kdcounselors = $('#inpNip').val()
+        }
+        var sts = BK_SekolahCounselors.find({
+            kd_sekolah: dataTsekolah.kd_sekolah,
+            kd_counselors: kdcounselors,
+            sts_counselors: true
+        }).count()
+
+        if(sts > 0){
+            sweetAlert("ERROR", "Duplikasi Data", "error")
+        }else{
+            var dataCounselors = {
+                kd_sekolah: dataTsekolah.kd_sekolah,
+                nm_sekolah: dataTsekolah.nm_sekolah,
+                kd_counselors: kdcounselors,
+                sts_jabatan: $('#selPns').val().toUpperCase(),
+                nm_lengkap: $('#inpNmLengkap').val().toUpperCase(),
+                agama: $('#selAgama').val().toUpperCase(),
+                jenkel: $('#selJenkel').val().toUpperCase(),
+                tempat_lahir: $('#inpT4lahir').val().toUpperCase(),
+                tanggal_lahir: new Date($('#inpTglLahir').val()),//$('#').val().toUpperCase(),
+                email: $('#inpEmail').val(),
+                phone: $('#inpHandPhone').val(),
+                alamat: $('#inpAlamat').val().toUpperCase(),
+                provinsi: $('#selProvince').val().toUpperCase(),
+                kota: $('#selKota').val().toUpperCase(),
+                kecamatan: $('#selKecamatan').val().toUpperCase(),
+                kelurahan: $('#inpKelurahan').val().toUpperCase(),
+                rt: $('#inpRt').val(),
+                rw: $('#inpRw').val(),
+                kodepos: $('#inpKodepos').val(),
+                created_at: new Date(),
+                update_at: new Date(),
+                urut: urutan + 1,
+                sts_counselors: true
+            }
+            BK_SekolahCounselors.insert(dataCounselors, function(error, result){
+                if(!error){
+                    console.log(error, result)
+                    sweetAlert("SUCCESS", "Sukses menambah Data Counselor di "+dataTsekolah.nm_sekolah, "success")
+                }else{
+                    var errStr = error.message
+                    var err = errStr.split('in bk')
+                    sweetAlert("ERROR", err[0], "error")
+                    throw  new Meteor.Error(error)
+
+                }
+            })
+        }
+        console.log(dataCounselors)
     }
 })
