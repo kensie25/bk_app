@@ -3,7 +3,7 @@
  */
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
+//import './../../../../client/BKSekolahCounselors.js';
 import './MenuMasterCounselors.html';
 
 function makeid() {
@@ -136,12 +136,21 @@ Template.MenuMasterCounselors.helpers({
 
     listCounselors: function(){
         var dataTsekolah = Template.instance().sekolah_id.get()
-        var data = BK_SekolahCounselors.find({kd_sekolah:dataTsekolah.kd_sekolah, sts_counselors: true}).fetch()
+        var data = BK_SekolahCounselors.find({kd_sekolah:dataTsekolah.kd_sekolah}).fetch()
         var x = data.map(function(doc){
-            doc.created_at = moment().format('LLL');
+            doc.created_at = moment(doc.created_at).format('DD-MMMM-YYYY, hh:mm:ss');
+            doc.updated_at = moment(doc.updated_at).format('DD-MMMM-YYYY, hh:mm:ss');
             return x
         })
         return data
+    },
+
+    isStatus: function(sts_counselors){
+        if(this.sts_counselors == "ACTIVE"){
+            return true
+        }else{
+            return false
+        }
     }
 })
 
@@ -190,7 +199,7 @@ Template.MenuMasterCounselors.events({
         var sts = BK_SekolahCounselors.find({
             kd_sekolah: dataTsekolah.kd_sekolah,
             kd_counselors: kdcounselors,
-            sts_counselors: true
+            sts_counselors: 'ACTIVE'
         }).count()
 
         if(sts > 0){
@@ -217,13 +226,12 @@ Template.MenuMasterCounselors.events({
                 rw: $('#inpRw').val(),
                 kodepos: $('#inpKodepos').val(),
                 created_at: new Date(),
-                update_at: new Date(),
+                updated_at: new Date(),
                 urut: urutan + 1,
-                sts_counselors: true
+                sts_counselors: 'ACTIVE'
             }
             BK_SekolahCounselors.insert(dataCounselors, function(error, result){
                 if(!error){
-                    console.log(error, result)
                     sweetAlert("SUCCESS", "Sukses menambah Data Counselor di "+dataTsekolah.nm_sekolah, "success")
                 }else{
                     var errStr = error.message
@@ -234,6 +242,112 @@ Template.MenuMasterCounselors.events({
                 }
             })
         }
-        console.log(dataCounselors)
+
+    },
+
+    'click #btDelCounselor': function(){
+        console.log(this._id, new Date())
+        var removeid = BK_SekolahCounselors.update({_id: this._id},
+            {$set: {sts_counselors: 'INACTIVE', updated_at:new Date()}}, function(error, result){
+                if(!error){
+                    sweetAlert("SUCCESS", "Sukses DELETE Data Counselor", "success")
+                }else{
+                    var errStr = error.message
+                    var err = errStr.split('.')
+                    console.log(err)
+                    sweetAlert("ERROR", err[0], "error")
+                    throw  new Meteor.Error(error)
+                }
+            })
+        return removeid
+    },
+
+    'click #btDtlCounselor': function(){
+        sweetAlert("SORRY", "Maaf,,, Halaman ini masih dalam development...", "warning")
+    },
+
+    'click #btActivedCounselor': function(){
+        var chars = this.nm_lengkap
+        var string_length = 8;
+        var randomstring = '';
+        for (var i=0; i<string_length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum,rnum+1);
+        }
+        //var data = {
+        //    email: this.email,
+        //    pass: randomstring,
+        //    profile: {
+        //        fullname: this.nm_lengkap,
+        //        tipeuser_id: '3',
+        //        handphone: this.phone,
+        //        tipe_user: [
+        //            {counselors: true}
+        //        ],
+        //        profile_id: this._id
+        //    }
+        //}
+        var dataCounselors = {
+            fullname: this.nm_lengkap,
+            agama: this.agama,
+            jenkel: this.jenkel,
+            tempat_lahir: this.tempat_lahir,
+            tanggal_lahir: this.tanggal_lahir,//$('#').val().toUpperCase(),
+            email: this.email,
+            phone: this.phone,
+            alamat: this.alamat,
+            provinsi: this.provinsi,
+            kota: this.kota,
+            kecamatan: this.kecamatan,
+            kelurahan: this.kelurahan,
+            rt: this.rt,
+            rw: this.rw,
+            kodepos: this.kodepos,
+            created_at: new Date(),
+            updated_at: new Date(),
+            tipeuser_id: '3',
+            nama_tipe: 'counselors',
+            counselors_id: this._id,
+            urut: function(){
+                var xurut = BK_UserProfile.find().count() +1
+                return xurut
+            }
+        }
+        BK_UserProfile.insert(dataCounselors, function(error, result){
+            if(!error){
+                sweetAlert("SUCCESS", "Sukses Insert Data Counselor Profile", "success")
+            }else{
+                var errStr = error.message
+                var err = errStr.split('.')
+                console.log(err)
+                sweetAlert("ERROR", err[0], "error")
+                throw  new Meteor.Error(error)
+            }
+        })
+        var idprofile = BK_UserProfile.find({counselors_id: this._id}).fetch()
+        console.log(idprofile)
+
+        /* untuk created new akun baru menggunakan meteor call ke server */
+
+        //Accounts.createUser({
+        //    email: this.email,
+        //    password: randomstring,
+        //    profile: {
+        //        fullname: this.fullname,
+        //        tipeuser_id: '3',
+        //        handphone: this.phone,
+        //        tipe_user: [
+        //            { counselors : true }
+        //        ],
+        //        profile_id: idprofile._id
+        //    }
+        //}, function(error, result){
+        //    if(!error){
+        //        sweetAlert("SUCCESS", "Sukses Insert New User Counselor..", "success")
+        //
+        //    }else{
+        //        sweetAlert("ERROR", "Data Korup,,, Hubungi Administrator...", "error")
+        //    }
+        //})
     }
 })

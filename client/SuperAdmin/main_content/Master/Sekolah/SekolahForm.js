@@ -14,6 +14,14 @@ Template.SekolahForm.onCreated(function(){
 
     var dkota = $('#selKota').val('1');
     this.kota = new ReactiveVar(dkota);
+
+    var userTipe = (Meteor.user().profile.type_user).map(function(doc){
+        if(doc.administrator === true){
+            return 'ok'
+        }
+
+    })
+    console.log(userTipe)
 });
 
 Template.SekolahForm.onRendered(function(){
@@ -37,6 +45,10 @@ Template.SekolahForm.helpers({
         return SysOptions.find({'title': 'STATUS SEKOLAH'}).fetch();
     },
 
+    optIdentitas: function(){
+        return SysOptions.find({'title': 'IDENTITAS'}).fetch();
+    },
+
     optProvinsi: function(){
         return SysProvinsi.find({}).fetch();
     },
@@ -46,24 +58,6 @@ Template.SekolahForm.helpers({
         var idprov = SysProvinsi.findOne({province: prov});
         var xidprov = idprov.province_id;
         return SysKabupaten.find({province_id: xidprov}).fetch();
-
-        //var datKota = Meteor.call('getKota', prov, function(err, res){
-        //    if(err){
-        //        alert(err.reason);
-        //    }else{
-        //        console.log(res)
-        //        return res
-        //    }
-        //})
-        //console.log(datKota)
-        //return (datKota)
-
-        //var datProv = _.uniq(SysKabupaten.find({'provinsi': prov},{sort: {
-        //    kabupaten: 1}
-        //}).fetch(), true, function(doc){
-        //    return doc.kabupaten;
-        //});
-        //return datProv
     },
 
     optKecamatan: function(){
@@ -82,6 +76,69 @@ Template.SekolahForm.helpers({
 
 Template.SekolahForm.events({
     'click #btaddSekolah':function(){
+        var countSek = BK_SekolahProfile.find({'kd_sekolah': $('#inpKdSekolah').val()}).count();
+        if(countSek != 0){
+            alert('Data sekolah Sdh Ada...');
+        }else{
+            var chars = $('#inpKdSekolah').val();
+            var string_length = 8;
+            var randomstring = '';
+            for (var i=0; i<string_length; i++) {
+                var rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum,rnum+1);
+            }
+            var countUrut = BK_SekolahProfile.find().count();
+            var dataSekolah = {
+                tipeuser_id: '2',
+                tipe_user:'adm_sekolah',
+                kd_sekolah: $('#inpKdSekolah').val(),
+                nm_sekolah: $('#inpNmSekolah').val().toUpperCase(),
+                jenjang_sekolah: $('#selJenjang').val(),
+                tipe_sekolah: $('#selSts').val(),
+                akreditasi: $('#selAkreditasi').val(),
+                alamat_sekolah: $('#inpAlamat').val().toUpperCase(),
+                provinsi: $('#selProvince').val(),
+                kota: $('#selKota').val(),
+                kecamatan: $('#selKecamatan').val().toUpperCase(),
+                kelurahan: $('#inpKelurahan').val().toUpperCase(),
+                rt: $('#inpRt').val(),
+                rw: $('#inpRw').val(),
+                kodepos: $('#inpKodepos').val(),
+                email_sekolah: $('#inpEmail').val(),
+                pass: randomstring,
+                phone_sekolah: $('#inpPhone').val(),
+                nm_kepsek: $('#inpNmKepsek').val().toUpperCase(),
+                nip_kepsek: $('#inpNipKepsek').val(),
+                nm_operator: $('#inpNmOpr').val().toUpperCase(),
+                email_operator: $('#inpEmailOpr').val(),
+                phone_operator: $('#inpPhoneOpr').val(),
+                identitas_operator: $('#inpNoIdentitasOpr').val(),
+                tipe_indentitas_operator: $('#selIdentitas').val(),
+                created_by: Meteor.userId()._id,
+                created_at: new Date(),
+                updated_at: new Date(),
+                urut: countUrut + 1,
+                sts_sekolah: 'inactive'
+
+            }
+            BK_SekolahProfile.insert(dataSekolah, function(err, res){
+                if(!err){
+                    Meteor.call('emailsend',function(err, res){
+                        if(!err){
+                            sweetAlert("SUCCESS", "Data Sekolah Berhasil di Simpan...", "success");
+                            //alert("Data Sekolah Berhasil di Simpan...!")
+                            $(':input').val('');
+
+                        }else{
+                            sweetAlert("ERROR", err.message, "error");
+                        }
+                    })
+                }else {
+                    sweetAlert("ERROR", err.message, "error");
+                    //alert(err.reason);
+                }
+            })
+        }
         Meteor.call('emailsend',function(err, res){
             if(err){
                 alert(err.reason);
@@ -98,10 +155,10 @@ Template.SekolahForm.events({
                     tipe_user:'adm_sekolah',
                     kd_sekolah: $('#inpKdSekolah').val(),
                     nm_sekolah: $('#inpNmSekolah').val().toUpperCase(),
-                    alamat_sekolah: $('#inpAlamat').val().toUpperCase(),
                     jenjang_sekolah: $('#selJenjang').val(),
                     tipe_sekolah: $('#selSts').val(),
                     akreditasi: $('#selAkreditasi').val(),
+                    alamat_sekolah: $('#inpAlamat').val().toUpperCase(),
                     provinsi: $('#selProvince').val(),
                     kota: $('#selKota').val(),
                     kecamatan: $('#selKecamatan').val().toUpperCase(),
@@ -109,15 +166,20 @@ Template.SekolahForm.events({
                     rt: $('#inpRt').val(),
                     rw: $('#inpRw').val(),
                     kodepos: $('#inpKodepos').val(),
-                    email: $('#inpEmail').val(),
+                    email_sekolah: $('#inpEmail').val(),
                     pass: randomstring,
-                    phone: $('#inpPhone').val(),
+                    phone_sekolah: $('#inpPhone').val(),
                     nm_kepsek: $('#inpNmKepsek').val().toUpperCase(),
                     nip_kepsek: $('#inpNipKepsek').val(),
+                    nm_operator: $('#inpNmOpr').val().toUpperCase(),
+                    email_operator: $('#inpEmailOpr').val(),
+                    phone_operator: $('#inpPhoneOpr').val(),
+                    identitas_operator: $('#inpNoIdentitasOpr').val(),
+                    tipe_indentitas_operator: $('#selIdentitas').val(),
                     created_by: Meteor.userId()._id,
                     created_at: new Date(),
-                    updated_at: '',
-                    sts_sekolah: false
+                    updated_at: new Date(),
+                    sts_sekolah: 'active'
 
                 }
                 // Insert Data Profile Sekolah
@@ -128,12 +190,12 @@ Template.SekolahForm.events({
                 }else{
                     BK_SekolahProfile.insert(dataSekolah, function(err, res){
                         if(!err){
-                            //sweetAlert("SUCCESS", "Data Sekolah Berhasil di Simpan...", "success");
-                            alert("Data Sekolah Berhasil di Simpan...!")
+                            sweetAlert("SUCCESS", "Data Sekolah Berhasil di Simpan...", "success");
+                            //alert("Data Sekolah Berhasil di Simpan...!")
                             $(':input').val('');
                         }else {
-                            //sweetAlert("ERROR", err.reason, "error");
-                            alert(err.reason);
+                            sweetAlert("ERROR", err.message, "error");
+                            //alert(err.reason);
                         }
                     })
                 }

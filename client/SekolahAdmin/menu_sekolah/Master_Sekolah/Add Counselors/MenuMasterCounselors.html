@@ -265,12 +265,12 @@
                                                     Handphone
                                                 </th>
                                                 <th>
-                                                    Tempat Lahir<br>
-                                                    Tanggal Lahir
+                                                    CreatedAt<br>
+                                                    UpdatedAt
                                                 </th>
                                                 <th>
-                                                    Email<br>
-                                                    No.Handphone
+                                                    Urut<br>
+                                                    Status
                                                 </th>
                                                 <th>
                                                     Act
@@ -301,14 +301,23 @@
                                                     </td>
                                                     <td>
                                                         {{created_at}}<br>
-                                                        {{created_by}}
+                                                        {{created_by}}<br>
+                                                        {{updated_at}}
                                                     </td>
                                                     <td>
                                                         {{urut}}<br>
                                                         {{sts_counselors}}
                                                     </td>
                                                     <td>
-                                                        <i class="fa fa-trash-o" id="btDelJurusan"></i>
+                                                        {{#if isStatus}}
+                                                            <i class="fa fa-trash text-red" id="btDelCounselor"></i><br>
+                                                            <i class="fa fa-folder-open text-warning" id="btDtlCounselor"></i><br>
+                                                            <i class="fa fa-user-plus text-primary" id="btActivedCounselor"></i>
+                                                        {{else}}
+                                                            <i class="fa fa-trash text-gray" id=""></i><br>
+                                                            <i class="fa fa-folder-open text-warning" id="btDtlCounselor"></i><br>
+                                                            <i class="fa fa-user-plus text-gray" id=""></i>
+                                                        {{/if}}
                                                     </td>
 
                                                 </tr>

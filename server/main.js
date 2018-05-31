@@ -168,18 +168,11 @@ Meteor.methods({
                 tipeuser_id: '2',
                 handphone: data.profile.handphone,
                 tipe_user: [
-                    { adm_sekolah : false }
+                    { adm_sekolah : true }
                 ],
                 profile_id: data.profile.profile_id
             }
         })
-            //this.unblock();
-            //Email.send({
-            //    to: data.email,
-            //    from: "ayat.ekaputra@gmail.com",
-            //    subject: xdata.nm_sekolah,
-            //    text: xdata.alamat_sekolah+" UserPass "+xdata.pass,
-            //});
     },
 
     'sendVerificationLink': function(NewUserId) {
