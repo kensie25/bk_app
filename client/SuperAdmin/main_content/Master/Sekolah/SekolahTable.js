@@ -34,6 +34,10 @@ Template.SekolahTable.helpers({
 Template.SekolahTable.events({
     'click #btActivateUser': function(e){
         e.preventDefault()
+        var xurut = BK_UserProfile.find({tipeuser_id: '2'}).count()
+        BK_UserProfile.insert({
+            
+        })
         console.log(this.email_sekolah, this.nm_operator, this.phone_operator, this.email_operator)
         var data = {
             email: this.email_sekolah,
@@ -48,22 +52,23 @@ Template.SekolahTable.events({
                 profile_id: this._id
             }
         }
-
-        Meteor.call('createdUserSekolah', data, function(err, res){
-            if(err){
-                //alert(err.reason)
-                sweetAlert("ERROR", err.message, "error");
-            }else{
-                alert('Created Akun Sukses...')
-                var userNew = Meteor.users.findOne({emails:{ $elemMatch: { address:  data.email } }});
-                console.log(userNew._id)
-                var NewUserId = userNew._id
-                Meteor.call('sendVerificationLink', NewUserId, function(err, res){
-                    if(err){
-                        sweetAlert("ERROR", err.message, "error");
-                    }
-                })
-            }
-        })
+        console.log(xurut)
+        console.log(data)
+        //Meteor.call('createdUserSekolah', data, function(err, res){
+        //    if(err){
+        //        //alert(err.reason)
+        //        sweetAlert("ERROR", err.message, "error");
+        //    }else{
+        //        alert('Created Akun Sukses...')
+        //        var userNew = Meteor.users.findOne({emails:{ $elemMatch: { address:  data.email } }});
+        //        console.log(userNew._id)
+        //        var NewUserId = userNew._id
+        //        Meteor.call('sendVerificationLink', NewUserId, function(err, res){
+        //            if(err){
+        //                sweetAlert("ERROR", err.message, "error");
+        //            }
+        //        })
+        //    }
+        //})
     }
 });

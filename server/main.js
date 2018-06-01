@@ -143,6 +143,27 @@ Meteor.publish('allowSekolahJurusan', function() {
 
 
 Meteor.methods({
+    'createdUserCounselors': function(dataToServer){
+        var data = {
+            email: dataToServer.email,
+            password: dataToServer.password,
+            profile: {
+                fullname: dataToServer.fullname,
+                tipeuser_id: '3',
+                handphone: dataToServer.handphone,
+                tipe_user:[
+                    {counselors: true}
+                ],
+                profile_id: dataToServer.profile_id
+            }
+        }
+        console.log(dataToServer)
+        pattern = { email: String, password: String, fullname: String, tipeuser_id: String, handphone: String, counselors: Boolean, profile_id: String }
+        check(dataToServer, pattern)
+
+        Accounts.createUser(data)
+    },
+
     'createdUserSekolah':function(data){
         pattern = { email: String, pass: String, nm_sekolah: String, alamat_sekolah: String, tipeuser_id: String }
 
@@ -175,14 +196,14 @@ Meteor.methods({
         })
     },
 
-    'sendVerificationLink': function(NewUserId) {
-        let userId = NewUserId;
+    'sendVerificationLink': function(NewUserId){
+        var userId = NewUserId;
         if ( userId ) {
             Accounts.emailTemplates.siteName = "BikApp";
             Accounts.emailTemplates.from     = "BikApp <admin@bk.com>";
 
             Accounts.emailTemplates.verifyEmail = {
-                subject() {
+                 subject(){
                     return "[BikApp] Verify Your Email Address";
                 },
                 text( userId, url ) {
@@ -209,16 +230,7 @@ Meteor.methods({
         });
     },
 
-    //'getProvinsi': function(){
-    //    var datProv = _.uniq(SysKodePos.find({},{sort: {
-    //                provinsi: 1}
-    //                }).fetch(), true, function(doc){
-    //                return doc.provinsi;
-    //                });
-    //
-    //    //console.log(datProv)
-    //    return datProv
-    //},
+
 
     'getKota': function(prov){
         console.log(SysKabupaten.find({'provinsi': prov}).fetch())

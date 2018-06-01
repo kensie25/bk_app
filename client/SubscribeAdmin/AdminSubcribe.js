@@ -14,3 +14,4 @@ Meteor.subscribe('allowSekolahProfile');
 Meteor.subscribe('allowSekolahCounselors');
 Meteor.subscribe('allowSekolahKelas');
 Meteor.subscribe('allowSekolahJurusan');
+Meteor.subscribe('allowUserProfile');
