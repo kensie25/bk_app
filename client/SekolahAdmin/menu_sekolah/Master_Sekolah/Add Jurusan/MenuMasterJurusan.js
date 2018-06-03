@@ -6,11 +6,11 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './MenuMasterJurusan.html';
 
-Template.MenuMasterJurusan.onCreated(function(){
-    var idprofile = Meteor.user().profile.profile_id
-    var idsekolah = BK_SekolahProfile.findOne({_id: idprofile})
-    this.sekolah_id = new ReactiveVar(idsekolah)
 
+Template.MenuMasterJurusan.onCreated(function(){
+    var sekolahid = Meteor.user().profile.sekolah_id
+    var idsekolah = BK_SekolahProfile.findOne({_id: sekolahid})
+    this.sekolah_id = new ReactiveVar(idsekolah)
 })
 
 Template.MenuMasterJurusan.onRendered(function(){
@@ -29,9 +29,9 @@ Template.MenuMasterJurusan.onRendered(function(){
 
 Template.MenuMasterJurusan.helpers({
     sekolahProfile: function () {
-        var idprofile = Meteor.user().profile.profile_id
-        var data = BK_SekolahProfile.findOne({_id: idprofile})
+        var data = BK_SekolahProfile.findOne({_id: Meteor.user().profile.sekolah_id})
         Template.instance().sekolah_id.set(data)
+        //console.log(data)
         return data
     },
 
@@ -51,7 +51,9 @@ Template.MenuMasterJurusan.helpers({
 
     listJurusan: function(){
         var dataTsekolah = Template.instance().sekolah_id.get()
-        return BK_SekolahJurusan.find({kd_sekolah: dataTsekolah.kd_sekolah, sts_jurusan: true}).fetch()
+        var data = BK_SekolahJurusan.find({kd_sekolah: dataTsekolah.kd_sekolah, sts_jurusan: 'ACTIVE'}).fetch()
+
+        return data
     }
 
 })
@@ -72,7 +74,7 @@ Template.MenuMasterJurusan.events({
         var sts = BK_SekolahJurusan.find({
             kd_sekolah: dataTsekolah.kd_sekolah,
             kd_jurusan: $('#inpKdJurusan').val().toUpperCase(),
-            sts_jurusan: true
+            sts_jurusan: 'ACTIVE'
         }).count()
         if(sts > 0){
             sweetAlert("ERROR", "Duplikasi Data", "error")
@@ -84,8 +86,9 @@ Template.MenuMasterJurusan.events({
                 nm_jurusan: $('#inpNmJurusan').val().toUpperCase(),
                 ket_jurusan: $('#inpKetJurusan').val(),
                 urut: urutan + 1,
-                sts_jurusan: true
+                sts_jurusan: 'ACTIVE'
             }
+            //console.log(dataJur)
             BK_SekolahJurusan.insert(dataJur, function(error, result){
                 if(!error){
                     sweetAlert("SUCCESS", "Insert Data Jurusan Baru Sukses...", "success")
@@ -101,10 +104,11 @@ Template.MenuMasterJurusan.events({
 
     'click #btDelJurusan': function(e){
         e.preventDefault()
-        BK_SekolahJurusan.update({_id: this._id}, {$set:{sts_jurusan: false}}, function(error, res){
+        BK_SekolahJurusan.update({_id: this._id}, {$set:{sts_jurusan: 'INACTIVE'}}, function(error, res){
             if(!error){
                 sweetAlert("SUCCESS", "Data Jurusan berhasil di Hapus...", "success")
                 $(':input').val('')
+                $('#inpKetJurusan').val('No Descriptions')
             }else{
                 console.log(error)
                 sweetAlert("ERROR", "Gagal Menghapus Data...", "error")

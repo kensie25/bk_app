@@ -7,10 +7,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import './MenuMasterKelas.html';
 
 Template.MenuMasterKelas.onCreated(function(){
-    var idprofile = Meteor.user().profile.profile_id
-    var idsekolah = BK_SekolahProfile.findOne({_id: idprofile})
+    //var idprofile = Meteor.user().profile.profile_id
+    var idsekolah = BK_SekolahProfile.findOne({_id: Meteor.user().profile.sekolah_id})
     this.sekolah_id = new ReactiveVar(idsekolah)
-    console.log(Meteor.status())
+    //console.log(Meteor.status())
 
 })
 
@@ -31,8 +31,8 @@ Template.MenuMasterKelas.onRendered(function(){
 
 Template.MenuMasterKelas.helpers({
     sekolahProfile: function(){
-        var idprofile = Meteor.user().profile.profile_id
-        var data = BK_SekolahProfile.findOne({_id: idprofile})
+        //var idprofile = Meteor.user().profile.profile_id
+        var data = BK_SekolahProfile.findOne({_id: Meteor.user().profile.sekolah_id})
         Template.instance().sekolah_id.set(data)
         return data
     },
@@ -44,12 +44,14 @@ Template.MenuMasterKelas.helpers({
 
     optJurusan: function(){
         var dataTsekolah = Template.instance().sekolah_id.get()
-        var jur = BK_SekolahJurusan.find({kd_sekolah: dataTsekolah.kd_sekolah, sts_jurusan: true}).fetch()
+        var jur = BK_SekolahJurusan.find({kd_sekolah: dataTsekolah.kd_sekolah, sts_jurusan: 'ACTIVE'}).fetch()
         return jur
     },
 
     listKelas: function(){
-        return BK_SekolahKelas.find({sts_kelas: true}).fetch()
+        //var idprofile = Meteor.user().profile.profile_id
+        var data = BK_SekolahProfile.findOne({_id: Meteor.user().profile.sekolah_id})
+        return BK_SekolahKelas.find({kd_sekolah: data.kd_sekolah, sts_kelas: 'ACTIVE'}).fetch()
     }
 })
 
@@ -65,6 +67,7 @@ Template.MenuMasterKelas.events({
             nm_walikelas: $('#inpNmWaliKelas').val().toUpperCase(),
             nip_walikelas: $('#inpNipWaliKelas').val().toUpperCase(),
             kelas_jurusan: $('#selJurusan').val(),
+            sts_kelas: 'ACTIVE',
             created_by: Meteor.user().profile.fullname,
             created_at: new Date(),
             updated_at: new Date(),
@@ -82,7 +85,8 @@ Template.MenuMasterKelas.events({
     },
 
     'click #btDelKelas': function(){
-        BK_SekolahKelas.update({_id: this._id}, {$set:{sts_kelas: false}}, function(error, res){
+        console.log(this._id)
+        BK_SekolahKelas.update({_id: this._id}, {$set:{sts_kelas: 'INACTIVE'}}, function(error, res){
             if(!error){
                 sweetAlert("SUCCESS", "Data Kelas berhasil di Hapus...", "success")
                 $(':input').val('')

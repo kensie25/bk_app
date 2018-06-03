@@ -14,7 +14,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="row">
+            <div class="row" id="inpRow">
                 <!-- left column -->
                 <div class="col-md-12">
                     <!-- general form elements -->
@@ -230,7 +230,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" id="tblRow">
                 <!-- left column -->
                 <div class="col-md-12">
                     <!-- general form elements -->
@@ -264,15 +264,15 @@
                                                     Email<br>
                                                     Handphone
                                                 </th>
-                                                <th>
+                                                <th class="text-center">
                                                     CreatedAt<br>
                                                     UpdatedAt
                                                 </th>
-                                                <th>
+                                                <th class="text-center">
                                                     Urut<br>
                                                     Status
                                                 </th>
-                                                <th>
+                                                <th class="text-center">
                                                     Act
                                                 </th>
                                             </tr>
@@ -299,24 +299,51 @@
                                                         {{email}}<br>
                                                         {{phone}}
                                                     </td>
-                                                    <td>
-                                                        {{created_at}}<br>
-                                                        {{created_by}}<br>
-                                                        {{updated_at}}
+                                                    <td class="text-center">
+                                                        <span style="font-size: 12px;">
+                                                            {{created_at}}<br>
+                                                            {{created_by}}<br>
+                                                            {{updated_at}}
+                                                        </span>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         {{urut}}<br>
                                                         {{sts_counselors}}
                                                     </td>
-                                                    <td>
+                                                    <td class="text-right">
                                                         {{#if isStatus}}
-                                                            <i class="fa fa-trash text-red" id="btDelCounselor"></i><br>
-                                                            <i class="fa fa-folder-open text-warning" id="btDtlCounselor"></i><br>
-                                                            <i class="fa fa-user-plus text-primary" id="btActivedCounselor"></i>
+                                                            <p style="margin-bottom: 2px;">
+                                                                <button id="btDelCounselor" class="btn btn-danger btn-xs">
+                                                                    <i class="fa fa-trash"></i> Remove
+                                                                </button>
+                                                            </p>
+                                                            <p style="margin-bottom: 2px;">
+                                                                <button id="btDtlCounselor" class="btn btn-info btn-xs" style="padding-right: 7px; padding-left: 7px;">
+                                                                    <i class="fa fa-folder-open"></i> Details
+                                                                </button>
+                                                            </p>
+                                                            <p style="margin-bottom: 2px;">
+                                                                <button id="btActivedCounselor" class="btn btn-success btn-xs">
+                                                                    <i class="fa fa-user-plus"></i> Aktifasi
+                                                                </button>
+                                                            </p>
+
                                                         {{else}}
-                                                            <i class="fa fa-trash text-gray" id=""></i><br>
-                                                            <i class="fa fa-folder-open text-warning" id="btDtlCounselor"></i><br>
-                                                            <i class="fa fa-user-plus text-gray" id=""></i>
+                                                            <p style="margin-bottom: 2px;">
+                                                                <button id="" class="btn btn-default btn-xs">
+                                                                    <i class="fa fa-trash"></i> Remove
+                                                                </button>
+                                                            </p>
+                                                            <p style="margin-bottom: 2px;">
+                                                                <button id="btDtlCounselor" class="btn btn-default btn-xs" style="padding-right: 7px; padding-left: 7px;">
+                                                                    <i class="fa fa-folder-open"></i> Details
+                                                                </button>
+                                                            </p>
+                                                            <p style="margin-bottom: 2px;">
+                                                                <button id="" class="btn btn-default btn-xs">
+                                                                    <i class="fa fa-user-plus"></i> Aktifasi
+                                                                </button>
+                                                            </p>
                                                         {{/if}}
                                                     </td>
 
@@ -330,6 +357,85 @@
                         </div>
                         <div class="overlay" id="spinnertbl">
                             <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row" id="dtlRow" style="display: none; height: 530px;">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4 class="box-title pull-left text-bold">Data Counselors <span id="dtlcounselors"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="comment">Status</label>
+                                                <select id="updPns" class="form-control" style="width: 100%" required>
+                                                    {{#each optPns}}
+                                                        <option value="{{value}}">{{teks}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="comment">KODE</label>
+                                                <input type="text" class="form-control" id="updNip"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="comment">Email</label>
+                                                <input class="form-control" placeholder="Input Alamat Email..." id="updEmail"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="comment">Handphone</label>
+                                                <span class="text-muted" style="font-size: 11px;">( +628XXXXXXXXX )</span>
+                                                <input class="form-control" placeholder="Input Nomor Handphone..." id="updHandPhone"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Alamat Lengkap</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" id="updAlamat" placeholder="Input Alamat Lengkap...">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-map-signs"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="comment">Status</label>
+                                                <select id="updStsCounselors" class="form-control" style="width: 100%">
+                                                    <option value="INACTIVE" class="text-center"> INACTIVE </option>
+                                                    <option value="ACTIVE" class="text-center"> ACTIVE </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 pull-right">
+                                            <label for="comment">&nbsp;</label>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary pull-right" id="btUpdDtlCounselors">
+                                                    <i class="fa fa-save"></i> Update Data
+                                                </button>
+                                                <button type="button" class="btn btn-default pull-right" id="btBackDtlCounselors" style="margin-right: 10px;">
+                                                    <i class="fa fa-arrow-circle-left"></i> Back
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

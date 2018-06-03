@@ -4,9 +4,9 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import './SidebarSEK.html';
+import './SidebarBK.html';
 
-Template.SidebarSEK.onRendered(function(){
+Template.SidebarBK.onRendered(function(){
     var xdelay = 100; // in milliseconds, check every minute
     setInterval(ConnectionReady, xdelay);
     var Constatus = Meteor.status()
@@ -21,12 +21,12 @@ Template.SidebarSEK.onRendered(function(){
     }
 });
 
-Template.SidebarSEK.onCreated(function(){
+Template.SidebarBK.onCreated(function(){
     var dataMenu = Session.get('MainMenu')
     this.mMenu = new ReactiveDict(dataMenu);
 });
 
-Template.SidebarSEK.helpers({
+Template.SidebarBK.helpers({
     titleHeader: function(){
         var title = Meteor.user().profile.tipeuser_id
         var data = SysTipeUser.findOne({tipeuser_id: title})
@@ -46,7 +46,7 @@ Template.SidebarSEK.helpers({
     }
 })
 
-Template.SidebarSEK.events({
+Template.SidebarBK.events({
     'click #main_menu': function(){
         var submenu = SysSubMenuBar.find({'mainmenu_id': '1'}).fetch();
         Session.set('submenu', submenu);

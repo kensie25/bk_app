@@ -40,8 +40,8 @@ function lainnya(){
 }
 
 Template.MenuMasterCounselors.onCreated(function(){
-    var idprofile = Meteor.user().profile.profile_id
-    var idsekolah = BK_SekolahProfile.findOne({_id: idprofile})
+    //var idprofile = Meteor.user().profile.profile_id
+    var idsekolah = BK_SekolahProfile.findOne({_id: Meteor.user().profile.sekolah_id})
     this.sekolah_id = new ReactiveVar(idsekolah)
 
     var dprov = $('#selProvince').val('1');
@@ -80,8 +80,8 @@ Template.MenuMasterCounselors.onRendered(function(){
 
 Template.MenuMasterCounselors.helpers({
     sekolahProfile: function () {
-        var idprofile = Meteor.user().profile.profile_id
-        var data = BK_SekolahProfile.findOne({_id: idprofile})
+        //var idprofile = Meteor.user().profile.profile_id
+        var data = BK_SekolahProfile.findOne({_id: Meteor.user().profile.sekolah_id})
         Template.instance().sekolah_id.set(data)
         return data
     },
@@ -182,6 +182,14 @@ Template.MenuMasterCounselors.events({
         }
     },
 
+    //'change #updPns': function(){
+    //    if($('#updPns').val() != 'LAINNYA'){
+    //        $('#updNip').val('')
+    //    }else{
+    //        $('#updNip').attr('readonly')
+    //    }
+    //},
+
     'click #btSaveCounselors': function(e){
         e.preventDefault()
         var dataTsekolah = Template.instance().sekolah_id.get()
@@ -207,6 +215,13 @@ Template.MenuMasterCounselors.events({
         if(sts > 0){
             sweetAlert("ERROR", "Duplikasi Data", "error")
         }else{
+            var chars = kdcounselors
+            var string_length = 8;
+            var randomstring = '';
+            for (var i=0; i<string_length; i++) {
+                var rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum,rnum+1);
+            }
             var dataCounselors = {
                 kd_sekolah: dataTsekolah.kd_sekolah,
                 nm_sekolah: dataTsekolah.nm_sekolah,
@@ -218,6 +233,7 @@ Template.MenuMasterCounselors.events({
                 tempat_lahir: $('#inpT4lahir').val().toUpperCase(),
                 tanggal_lahir: new Date($('#inpTglLahir').val()),//$('#').val().toUpperCase(),
                 email: $('#inpEmail').val(),
+                pass: randomstring,
                 phone: $('#inpHandPhone').val(),
                 alamat: $('#inpAlamat').val().toUpperCase(),
                 provinsi: $('#selProvince').val().toUpperCase(),
@@ -232,23 +248,54 @@ Template.MenuMasterCounselors.events({
                 urut: urutan + 1,
                 sts_counselors: 'ACTIVE'
             }
-            BK_SekolahCounselors.insert(dataCounselors, function(error, result){
-                if(!error){
-                    sweetAlert("SUCCESS", "Sukses menambah Data Counselor di "+dataTsekolah.nm_sekolah, "success")
-                }else{
-                    var errStr = error.message
-                    var err = errStr.split('in bk')
-                    sweetAlert("ERROR", err[0], "error")
-                    throw  new Meteor.Error(error)
+            var profilecount = BK_UserProfile.find({counselors_id: dataCounselors.email}).count()
+            if(profilecount > 0){
+                sweetAlert("ERROR", "Email Sudah digunakan oleh profile lain...", "error")
+            }else{
+                BK_SekolahCounselors.insert(dataCounselors, function(error, result){
+                    if(!error){
+                        var xurut = BK_UserProfile.find({nama_tipe: 'COUNSELORS'}).count()
+                        var dataProfile = {
+                            fullname: dataCounselors.nm_lengkap,
+                            tipe_identitas: dataCounselors.sts_jabatan,
+                            no_identitas: dataCounselors.kd_counselors,
+                            email: dataCounselors.email,
+                            handphone: dataCounselors.phone,
+                            tipeuser_id: '3',
+                            nama_tipe: 'COUNSELORS',
+                            sekolah_id: dataTsekolah._id,
+                            counselors_id: result,
+                            created_at: new Date(),
+                            updated_at: new Date(),
+                            urut: xurut + 1
+                        }
+                        BK_UserProfile.insert(dataProfile, function(error, result) {
+                            if (!error) {
+                                sweetAlert("SUCCESS", "Sukses menambah Data Counselor di "+dataTsekolah.nm_sekolah, "success")
+                                $(':input').val('')
+                            }else{
+                                var errStr = error.message
+                                var err = errStr.split('in bk')
+                                sweetAlert("ERROR", err[0], "error")
+                                throw  new Meteor.Error(error)
+                            }
+                        })
+                        //sweetAlert("SUCCESS", "Sukses menambah Data Counselor di "+dataTsekolah.nm_sekolah, "success")
+                    }else{
+                        var errStr = error.message
+                        var err = errStr.split('in bk')
+                        sweetAlert("ERROR", err[0], "error")
+                        throw  new Meteor.Error(error)
 
-                }
-            })
+                    }
+                })
+            }
         }
 
     },
 
     'click #btDelCounselor': function(){
-        console.log(this._id, new Date())
+        //console.log(this._id, new Date())
         var removeid = BK_SekolahCounselors.update({_id: this._id},
             {$set: {sts_counselors: 'INACTIVE', updated_at:new Date()}}, function(error, result){
                 if(!error){
@@ -265,95 +312,112 @@ Template.MenuMasterCounselors.events({
     },
 
     'click #btDtlCounselor': function(){
-        sweetAlert("SORRY", "Maaf,,, Halaman ini masih dalam development...", "warning")
+        //sweetAlert("SORRY", "Maaf,,, Halaman ini masih dalam development...", "warning")
+        console.log(this._id, this.kd_counselors, this.nm_lengkap)
+        $('#dtlcounselors').html(this.nm_lengkap)
+        $('#updNip').val(this.kd_counselors)
+        $('#updPns').val(this.sts_jabatan)
+        $('#updEmail').val(this.email)
+        $('#updHandPhone').val(this.phone)
+        $('#updAlamat').val(this.alamat)
+        $('#updStsCounselors').val(this.sts_counselors)
+        $('#dtlRow').show()
+        $('#inpRow').hide()
+        $('#tblRow').hide()
+    },
+
+    'click #btBackDtlCounselors': function(){
+        $('#dtlRow').hide()
+        $('#inpRow').show()
+        $('#tblRow').show()
+    },
+
+    'click #btUpdDtlCounselors': function(){
+        var kode = $('#updNip').val()
+        var email = $('#updEmail').val()
+        var hp = $('#updHandPhone').val()
+        var idx = BK_SekolahCounselors.findOne({kd_counselors: kode, email: email, phone: hp})
+        console.log(idx)
+        BK_SekolahCounselors.update({_id: idx._id},
+            {$set:{sts_counselors: 'ACTIVE', updated_at: new Date()}}, function(error, result){
+                if(!error){
+                    sweetAlert("SUCCESS", "Sukses UPDATE Data Counselor", "success")
+                    $('#dtlRow').hide()
+                    $('#inpRow').show()
+                    $('#tblRow').show()
+                }else{
+                    sweetAlert("ERROR", error.message, "error");
+                }
+            })
+
     },
 
     'click #btActivedCounselor': function(){
-        var xcounselors_id = this._id
-        var chars = this.email
-        var string_length = 8;
-        var randomstring = '';
-        for (var i=0; i<string_length; i++) {
-            var rnum = Math.floor(Math.random() * chars.length);
-            randomstring += chars.substring(rnum,rnum+1);
-        }
-        var xurut = BK_UserProfile.find({tipeuser_id: '3'}).count()
+        var profilid = BK_UserProfile.findOne({counselors_id: this._id})
+        //console.log(profilid)
         var dataCounselors = {
             fullname: this.nm_lengkap,
-            agama: this.agama,
-            jenkel: this.jenkel,
-            tempat_lahir: this.tempat_lahir,
-            tanggal_lahir: this.tanggal_lahir,//$('#').val().toUpperCase(),
+            password: this.pass,
             email: this.email,
-            phone: this.phone,
-            alamat: this.alamat,
-            provinsi: this.provinsi,
-            kota: this.kota,
-            kecamatan: this.kecamatan,
-            kelurahan: this.kelurahan,
-            rt: this.rt,
-            rw: this.rw,
-            kodepos: this.kodepos,
-            created_at: new Date(),
-            updated_at: new Date(),
+            handphone: this.phone,
             tipeuser_id: '3',
-            nama_tipe: 'counselors',
-            counselors_id: this._id,
-            urut: xurut + 1
+            //nama_tipe: 'COUNSELORS',
+            profile_id: profilid._id,
+            counselors_id: this._id
         }
+        var checkUser = Meteor.users.findOne({emails: {$elemMatch: {address: dataCounselors.email}}})
+        //console.log(checkUser)
+        if(checkUser === undefined){
+            Meteor.call('createdUserCounselors', dataCounselors, function(error, result) {
+                if (!error) {
+                    var userEmailNew = dataCounselors.email
+                    var userNew = Meteor.users.findOne({emails: {$elemMatch: {address: userEmailNew}}})
 
-        //var idprofile = BK_UserProfile.find({counselors_id: xcounselors_id}).fetch()
-
-
-        var profilecount = BK_UserProfile.find({counselors_id: xcounselors_id}).count()
-        //console.log(profilecount)
-        if(profilecount > 0){
-            sweetAlert("ERROR", "Data Sudah digunakan oleh profile lain...", "error")
-        }else{
-            BK_UserProfile.insert(dataCounselors, function(error, result){
-                if(!error){
-                    var dataToServer = {
-                        email: dataCounselors.email,
-                        password: randomstring.trim(),
-                        fullname: dataCounselors.fullname,
-                        tipeuser_id: '3',
-                        handphone: dataCounselors.phone,
-                        counselors: true,
-                        profile_id: result
-                    }
-                    Meteor.call('createdUserCounselors', dataToServer, function(error, result){
-                        if(!error){
-                            var userEmailNew = dataCounselors.email
-                            //console.log(userEmailNew)
-                            var userNew = Meteor.users.findOne({emails:{ $elemMatch: { address: userEmailNew } }})
-
-                            var NewUserId = userNew._id
-                            Meteor.call('sendVerificationLink', NewUserId, function(err, res){
-                                if(err){
-                                    sweetAlert("ERROR", err.message, "error");
-                                }else{
-                                    sweetAlert("SUCCESS", "Sukses Create Akun Counselor...", "success")
+                    var NewUserId = userNew._id
+                    Meteor.call('sendVerificationLink', NewUserId, function (err, res) {
+                        if (err) {
+                            sweetAlert("ERROR", err.message, "error");
+                        } else {
+                            var notifEmail = {
+                                emailx: dataCounselors.email,
+                                passx: dataCounselors.password
+                            }
+                            Meteor.call('emailsend', notifEmail, function (error, result) {
+                                if (!error) {
+                                    sweetAlert("SUCCESS", "Sukses Create Akun Counselor..., User & Password akan di kirim ke " + dataCounselors.email, "success")
                                 }
                             })
 
-                        }else{
-                            var errStr = error.message
-                            var err = errStr.split('.')
-                            console.log(err)
-                            sweetAlert("ERROR", err[0], "error")
-                            throw  new Meteor.Error(error)
                         }
                     })
-                    //console.log(dataToServer)
-                    sweetAlert("SUCCESS", "Sukses Insert Data Counselor Profile", "success")
+
                 }else{
-                    var errStr = error.message
-                    var err = errStr.split('.')
-                    console.log(err)
-                    sweetAlert("ERROR", err[0], "error")
-                    throw  new Meteor.Error(error)
+                    sweetAlert("ERROR", err.message, "error");
+                }
+            })
+        }else{
+            sweetAlert("WARNING", "Email sdh di gunakan User lain, System akan mengirimkan kembali aktivasi akun ke " + dataCounselors.email, "success")
+            var userEmailNew = dataCounselors.email
+            var userNew = Meteor.users.findOne({emails: {$elemMatch: {address: userEmailNew}}})
+
+            var NewUserId = userNew._id
+            Meteor.call('sendVerificationLink', NewUserId, function (err, res) {
+                if (err) {
+                    sweetAlert("ERROR", err.message, "error");
+                } else {
+                    var notifEmail = {
+                        emailx: dataCounselors.email,
+                        passx: dataCounselors.password
+                    }
+                    Meteor.call('emailsend', notifEmail, function (error, result) {
+                        if (!error) {
+                            sweetAlert("SUCCESS", "User & Password akan di kirim ke " + dataCounselors.email, "success")
+                        }
+                    })
+
                 }
             })
         }
+
     }
 })

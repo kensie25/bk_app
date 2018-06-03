@@ -42,6 +42,12 @@ Template.SidebarSA.helpers({
     //        }
     //    }
     //},
+    titleHeader: function(){
+        var title = Meteor.user().profile.tipeuser_id
+        var data = SysTipeUser.findOne({tipeuser_id: title})
+        //console.log(data)
+        return data
+    },
 
     listMenu: function(){
         var dMenu = Template.instance().data;

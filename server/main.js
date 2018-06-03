@@ -143,23 +143,24 @@ Meteor.publish('allowSekolahJurusan', function() {
 
 
 Meteor.methods({
-    'createdUserCounselors': function(dataToServer){
+    'createdUserCounselors': function(dataCounselors){
         var data = {
-            email: dataToServer.email,
-            password: dataToServer.password,
+            email: dataCounselors.email,
+            password: dataCounselors.password,
             profile: {
-                fullname: dataToServer.fullname,
+                fullname: dataCounselors.fullname,
                 tipeuser_id: '3',
-                handphone: dataToServer.handphone,
+                handphone: dataCounselors.handphone,
                 tipe_user:[
                     {counselors: true}
                 ],
-                profile_id: dataToServer.profile_id
+                profile_id: dataCounselors.profile_id,
+                counselors_id: dataCounselors.counselors_id
             }
         }
-        console.log(dataToServer)
-        pattern = { email: String, password: String, fullname: String, tipeuser_id: String, handphone: String, counselors: Boolean, profile_id: String }
-        check(dataToServer, pattern)
+        console.log(dataCounselors)
+        pattern = { email: String, password: String, fullname: String, tipeuser_id: String, handphone: String,  profile_id: String, counselors_id: String }
+        check(dataCounselors, pattern)
 
         Accounts.createUser(data)
     },
@@ -189,9 +190,10 @@ Meteor.methods({
                 tipeuser_id: '2',
                 handphone: data.profile.handphone,
                 tipe_user: [
-                    { adm_sekolah : true }
+                    { operator_sekolah : true }
                 ],
-                profile_id: data.profile.profile_id
+                profile_id: data.profile.profile_id,
+                sekolah_id: data.profile.sekolah_id
             }
         })
     },
@@ -220,23 +222,27 @@ Meteor.methods({
         }
     },
 
-    'emailsend': function(){
+    'emailsend': function(notifEmail){
         this.unblock();
         Email.send({
-            to: "ayat.ekapoetra@gmail.com",
+            to: notifEmail.emailx,
             from: "ayat.ekaputra@gmail.com",
             subject: "Registrasi Sekolah",
-            text: "The contents of our email in plain text.",
+            text: "Selamat Datang di Aplikasi Bimbingan Konseling Online. Password anda adalah "+ notifEmail.passx,
         });
     },
 
-
-
-    'getKota': function(prov){
-        console.log(SysKabupaten.find({'provinsi': prov}).fetch())
-        return SysKabupaten.find({'provinsi': prov}).fetch();
-
-    },
+    //'getSekolah': function(idprofile){
+    //    var sek = BK_UserProfile.findOne({_id: idprofile})
+    //    console.log(sek.sekolah_id)
+    //    return BK_SekolahProfile.findOne({_id: sek.sekolah_id})
+    //},
+    //
+    //'getKota': function(prov){
+    //    console.log(SysKabupaten.find({'provinsi': prov}).fetch())
+    //    return SysKabupaten.find({'provinsi': prov}).fetch();
+    //
+    //},
 
     //'getKecamatan': function(kecamatan){
     //    var datCamat = _.uniq(SysKodePos.find({kecamatan: kecamatan},{sort: {

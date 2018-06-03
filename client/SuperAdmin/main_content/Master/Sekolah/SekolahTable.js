@@ -35,10 +35,10 @@ Template.SekolahTable.events({
     'click #btActivateUser': function(e){
         e.preventDefault()
         var xurut = BK_UserProfile.find({tipeuser_id: '2'}).count()
-        BK_UserProfile.insert({
-            
-        })
-        console.log(this.email_sekolah, this.nm_operator, this.phone_operator, this.email_operator)
+        var userprofile = BK_UserProfile.findOne({sekolah_id: this._id})
+        var userprofile_id = userprofile._id
+        //console.log(userprofile._id)
+        //console.log(this.email_sekolah, this.nm_operator, this.phone_operator, this.email_operator)
         var data = {
             email: this.email_sekolah,
             pass: this.pass,
@@ -47,28 +47,28 @@ Template.SekolahTable.events({
                 tipeuser_id: '2',
                 handphone: this.phone_operator,
                 tipe_user: [
-                    {adm_sekolah: true}
+                    {operator_sekolah: true}
                 ],
-                profile_id: this._id
+                profile_id: userprofile_id,
+                sekolah_id: this._id
             }
         }
-        console.log(xurut)
-        console.log(data)
-        //Meteor.call('createdUserSekolah', data, function(err, res){
-        //    if(err){
-        //        //alert(err.reason)
-        //        sweetAlert("ERROR", err.message, "error");
-        //    }else{
-        //        alert('Created Akun Sukses...')
-        //        var userNew = Meteor.users.findOne({emails:{ $elemMatch: { address:  data.email } }});
-        //        console.log(userNew._id)
-        //        var NewUserId = userNew._id
-        //        Meteor.call('sendVerificationLink', NewUserId, function(err, res){
-        //            if(err){
-        //                sweetAlert("ERROR", err.message, "error");
-        //            }
-        //        })
-        //    }
-        //})
+
+        Meteor.call('createdUserSekolah', data, function(err, res){
+            if(err){
+                //alert(err.reason)
+                sweetAlert("ERROR", err.message, "error");
+            }else{
+                sweetAlert("SUCCESS", "Link Aktifasi telah dikirim ke email "+data.email, "success");
+                var userNew = Meteor.users.findOne({emails:{ $elemMatch: { address:  data.email } }});
+                console.log(userNew._id)
+                var NewUserId = userNew._id
+                Meteor.call('sendVerificationLink', NewUserId, function(err, res){
+                    if(err){
+                        sweetAlert("ERROR", err.message, "error");
+                    }
+                })
+            }
+        })
     }
 });
