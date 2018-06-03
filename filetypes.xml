@@ -1,0 +1,8 @@
+<application>
+  <component name="FileTypeManager" version="16">
+    <extensionMap>
+      <mapping pattern="content" type="EJS" />
+      <mapping pattern="content.ejs" type="PLAIN_TEXT" />
+    </extensionMap>
+  </component>
+</application>
